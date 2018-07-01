@@ -12,7 +12,6 @@
 
 #include "main.h"
 #include "chassis.h"
-#include "turn.h"
 #include "PID.h"
 
 /*
@@ -111,7 +110,8 @@ void operatorControl() {
 
         // set chassis speed (left, right) based on power and turn values
         chassisSet(power+turn, power-turn); // accessed from chassis.c
-        // i
+        // if no joystick input, then enable stationary PID using the
+        // previously captured encoder positions
         if (!powerPositive && !turnPositive) {
             getTo(encoderPosL, encoderPosR);
         }

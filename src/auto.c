@@ -29,7 +29,7 @@
  * so, the robot will await a switch to another mode or disable/enable cycle.
  */
 
-  void driveDistance(double distance) {
+ void driveDistance(double distance) {
      // initialize static variables
      double PI = 3.14159265358979323846;
      int rotations = (int)(distance*360/(4*PI));
