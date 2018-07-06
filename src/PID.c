@@ -31,6 +31,7 @@ void getTo(int rotationsL, int rotationsR) {
 
   while (true) {
     // update sensor error variables
+    printf("HELLO MOTHERFUCKING WORLD");
     prevErrorL = errorL;
     prevErrorR = errorR;
     errorL = rotationsL - encoderGet(encoderL);
@@ -77,5 +78,6 @@ void getTo(int rotationsL, int rotationsR) {
     printf("%d %d\n", errorL, errorR);
     printf("%d %d\n", errorTotalL, errorTotalR);
     delay(20);
+    printf("FUCK ME");
   }
 }

@@ -34,15 +34,15 @@
  */
 
 void aauto() {
-  //delay(1000);
+  delay(1000);
   // initialize static variables
   double PI = 3.14159265358979323846;
-  int rotations = (int)(20*360/(4*PI));
+  int rotations = (int)(50*360/(4*PI));
   getTo(rotations, rotations);
 }
 void operatorControl() {
 	//aauto();
-	//delay(10000);
+	//delay(10000000);
 	int power; // forward backward speed
  	int turn; // turn power
 
