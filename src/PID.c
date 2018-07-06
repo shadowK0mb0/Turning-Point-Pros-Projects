@@ -76,13 +76,13 @@ void getTo(int rotationsL, int rotationsR) {
 
         // set motor values
         chassisSet(currentL, currentR);
-        /*
-        debug statements
+
+    
         printf("--%d %d--\n", currentL, currentR);
         printf("%d %d\n", rotationsL - errorL, rotationsR - errorR);
         printf("%d %d\n", errorL, errorR);
         printf("%d %d\n", errorTotalL, errorTotalR);
-        */
+
         delay(20);
     }
 }
