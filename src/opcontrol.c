@@ -33,7 +33,6 @@
  */
 
 void aauto() {
-  //delay(1000);
   delay(1000);
   // initialize static variables
   double PI = 3.14159265358979323846;
