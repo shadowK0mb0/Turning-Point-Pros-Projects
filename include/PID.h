@@ -4,4 +4,7 @@
 // Sets the speeds of the left and right wheels of the chassis
 void getTo(int rotationsL, int rotationsR);
 
+// Sets the speeds of the flywheel
+int flywheel(int velocity, int currentVelocity, int previouserror);
+
 #endif // _CHASSIS_H_

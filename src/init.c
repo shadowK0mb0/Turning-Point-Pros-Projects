@@ -39,4 +39,5 @@ void initializeIO() {
 void initialize() {
   encoderL = encoderInit(QUAD_LEFT_TOP_PORT, QUAD_LEFT_BOTTOM_PORT, false);
   encoderR = encoderInit(QUAD_RIGHT_TOP_PORT, QUAD_RIGHT_BOTTOM_PORT, true);
+  encoderF = encoderInit(QUAD_FLYWHEEL_TOP_PORT, QUAD_FLYWHEEL_BOTTOM_PORT, true);
 }

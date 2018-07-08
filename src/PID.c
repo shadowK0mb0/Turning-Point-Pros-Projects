@@ -2,6 +2,62 @@
 #include "chassis.h"
 #include "PID.h"
 
+void flywheelSet(int current) {
+  if (current > 120) {
+    current = 120;
+  }
+  else if (current < -120) {
+    current = -120;
+  }
+
+  motorSet(7, current);
+}
+
+int flywheel(int velocity, int currentVelocity, int prevError) {
+  // initialize sensor error variables
+  int error = velocity - currentVelocity;
+
+  // initialize pid coefficients
+  double kp = 0.121;
+  double kd = 0.071;
+  // declare PID error values
+  double proportionalError;
+  double differentialError;
+  int current;
+
+
+
+    //error = rotations - encoderGet(encoderF);
+
+    proportionalError = error * kp;
+    differentialError = (error - prevError) * kd;
+
+    if (error == 0) {
+      differentialError = 0;
+    }
+
+    current = (int)(proportionalError + differentialError);
+
+    /*if (currentL < 0) {
+      currentL = 0;
+    }
+    if (currentR < 0) {
+      currentR = 0;
+    }*/
+
+    flywheelSet(current);
+    /*
+    printf("--%d %d--\n", current);
+    printf("%d %d\n", rotations - error);
+    printf("%d %d\n", error);
+    printf("%d %d\n", errorTotal);
+    */
+    delay(20);
+    prevError = error;
+    return prevError;
+}
+
+
 
 // turning right
 void getTo(int rotationsL, int rotationsR) {
@@ -31,7 +87,6 @@ void getTo(int rotationsL, int rotationsR) {
 
   while (true) {
     // update sensor error variables
-    printf("HELLO MOTHERFUCKING WORLD");
     prevErrorL = errorL;
     prevErrorR = errorR;
     errorL = rotationsL - encoderGet(encoderL);
@@ -78,6 +133,5 @@ void getTo(int rotationsL, int rotationsR) {
     printf("%d %d\n", errorL, errorR);
     printf("%d %d\n", errorTotalL, errorTotalR);
     delay(20);
-    printf("FUCK ME");
   }
 }

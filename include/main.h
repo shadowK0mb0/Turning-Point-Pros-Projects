@@ -29,12 +29,16 @@
 #define QUAD_LEFT_BOTTOM_PORT 4
 #define QUAD_RIGHT_TOP_PORT 5
 #define QUAD_RIGHT_BOTTOM_PORT 6
+#define QUAD_FLYWHEEL_TOP_PORT 7
+#define QUAD_FLYWHEEL_BOTTOM_PORT 8
+
 
 
 #include <API.h>
 // Multiple encoders can be declared
 Encoder encoderL;
 Encoder encoderR;
+Encoder encoderF;
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus
 extern "C" {
