@@ -51,6 +51,7 @@ void operatorControl() {
 
 	encoderReset(encoderL); // clear encoders
 	encoderReset(encoderR);
+    encoderReset(encoderF);
     // whether power and turn values are positive or 0
     bool powerPositive = false;
     bool turnPositive = false;
@@ -58,13 +59,20 @@ void operatorControl() {
     // calls and initializations, thus speed up program
     int encoderLDegrees = 0;
     int encoderRDegrees = 0;
+
+    int encoderFCurr = 0;
+    int encoderFPrev = 0;
+    int prevTime = 0;
+    int currTime = 0;
+    int rotationsPerSec = 0;
 	while (1) {
 		power = joystickGetAnalog(1, 3); // vertical axis on left joystick
         turn  = joystickGetAnalog(1, 1); // horizontal axis on right joystick
 
         encoderLDegrees = encoderGet(encoderL); // save encoder values as ints
         encoderRDegrees = encoderGet(encoderR); //so you don't have to call
-                                                // function every time
+        encoderFCurr = encoderGet(encoderF);    // function every time
+        currTime = millis();
         /* check if either:
               power has shifted from positive to 0, and
               the turn value is either within deadzone or 0
@@ -75,6 +83,11 @@ void operatorControl() {
             thus we want to remain at this exact position, thus capture the
             current encoder values to set as the goal we want to get to
         */
+        if (currTime - prevTime != 0) {
+            rotationsPerSec = (int)(encoderFCurr - encoderFPrev)*1000/((currTime - prevTime)*360);
+        } else {
+            rotationsPerSec = 0;
+        }
         if (
               (power < 20 && power > -20 && powerPositive &&
               ((turn < 20 && turn > -20) || !turnPositive))
@@ -108,13 +121,15 @@ void operatorControl() {
             turn -= 10;
             turnPositive = true;
         }
-
+        printf("%d\n",rotationsPerSec);
         // set chassis speed (left, right) based on power and turn values
         chassisSet(power+turn, power-turn); // accessed from chassis.c
         // i
         if (!powerPositive && !turnPositive) {
             getTo(encoderPosL, encoderPosR);
         }
+        encoderFPrev = encoderFCurr;
+        prevTime = currTime;
         delay(20);
     }
 }

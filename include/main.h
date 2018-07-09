@@ -25,6 +25,8 @@
 // This prevents multiple inclusion, which isn't bad for this file but is good practice
 #define MAIN_H_
 // Digital port number for top and bottom port of quad encoder
+#define QUAD_FLYWHEEL_TOP_PORT 1
+#define QUAD_FLYWHEEL_BOTTOM_PORT 2
 #define QUAD_LEFT_TOP_PORT 3
 #define QUAD_LEFT_BOTTOM_PORT 4
 #define QUAD_RIGHT_TOP_PORT 5
@@ -35,6 +37,7 @@
 // Multiple encoders can be declared
 Encoder encoderL;
 Encoder encoderR;
+Encoder encoderF;
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus
 extern "C" {
