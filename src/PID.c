@@ -12,8 +12,8 @@ void getTo(int rotationsL, int rotationsR) {
   int errorR = rotationsR - encoderGet(encoderR);
   int prevErrorL = errorL;
   int prevErrorR = errorR;
-  int errorTotalL;
-  int errorTotalR;
+  int errorTotalL = 0;
+  int errorTotalR = 0;
   // initialize pid coefficients
   double kp = 0.121;
   double ki = 0.005;
