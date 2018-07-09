@@ -121,12 +121,13 @@ void operatorControl() {
             turn -= 10;
             turnPositive = true;
         }
+        printf("%d--\n", encoderFCurr);
         printf("%d\n",rotationsPerSec);
         // set chassis speed (left, right) based on power and turn values
         chassisSet(power+turn, power-turn); // accessed from chassis.c
         // i
         if (!powerPositive && !turnPositive) {
-            getTo(encoderPosL, encoderPosR);
+            //getTo(encoderPosL, encoderPosR);
         }
         encoderFPrev = encoderFCurr;
         prevTime = currTime;

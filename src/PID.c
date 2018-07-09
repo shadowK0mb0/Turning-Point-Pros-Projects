@@ -78,6 +78,6 @@ void getTo(int rotationsL, int rotationsR) {
     printf("%d %d\n", errorL, errorR);
     printf("%d %d\n", errorTotalL, errorTotalR);
     delay(20);
-    printf("FUCK ME");
+
   }
 }
