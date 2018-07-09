@@ -84,7 +84,7 @@ void operatorControl() {
             current encoder values to set as the goal we want to get to
         */
         if (currTime - prevTime != 0) {
-            rotationsPerSec = (int)(encoderFCurr - encoderFPrev)*1000/((currTime - prevTime)*360);
+            rotationsPerSec = (int)(encoderFCurr - encoderFPrev)*1000*60/((currTime - prevTime)*360);
         } else {
             rotationsPerSec = 0;
         }
@@ -121,7 +121,8 @@ void operatorControl() {
             turn -= 10;
             turnPositive = true;
         }
-        printf("%d--\n", encoderFCurr);
+        printf("%d -- ", encoderFCurr);
+        printf("%d\n", currTime);
         printf("%d\n",rotationsPerSec);
         // set chassis speed (left, right) based on power and turn values
         chassisSet(power+turn, power-turn); // accessed from chassis.c
