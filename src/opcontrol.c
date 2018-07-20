@@ -90,8 +90,9 @@ void operatorControl() {
         */
         currentTime = millis();
         currentTicks = encoderGet(encoderF);
-        currentVelocity = (currentTicks - previousTicks) / (currentTime - previousTime);
-        error = flywheel(500, currentVelocity, error);
+        currentVelocity = 1000*(double)(currentTicks - previousTicks) / (6*(currentTime - previousTime)) ;
+        error = flywheel(100, currentVelocity, error);
+        //flywheelSet(127);
         if (
               (power < 20 && power > -20 && powerPositive &&
               ((turn < 20 && turn > -20) || !turnPositive))
@@ -127,14 +128,15 @@ void operatorControl() {
             turnPositive = true;
         }
         printf("%f %d\n", currentVelocity, currentTicks);
+        printf("%d %d\n", currentTime, previousTime);
 
         // set chassis speed (left, right) based on power and turn values
         chassisSet(power+turn, power-turn); // accessed from chassis.c
         // i
-        if (!powerPositive && !turnPositive) {
+        /*if (!powerPositive && !turnPositive) {
             getTo(encoderPosL, encoderPosR);
-        }
-        delay(20);
+        }*/
+        delay(100);
         previousTicks = currentTicks;
         previousTime = currentTime;
         //previousVelocity = currentVelocity;

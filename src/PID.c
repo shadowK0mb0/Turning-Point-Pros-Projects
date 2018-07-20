@@ -13,6 +13,7 @@ void flywheelSet(int current) {
   motorSet(7, current);
 }
 
+//Velocity is in RPM
 int flywheel(double velocity, double currentVelocity, int prevError) {
   // initialize sensor error variables
   int error = velocity - currentVelocity;
@@ -45,6 +46,7 @@ int flywheel(double velocity, double currentVelocity, int prevError) {
       currentR = 0;
     }*/
 
+    //flywheelSet(current);
     flywheelSet(current);
 
     //printf("--%d %d--\n", current);
@@ -52,7 +54,7 @@ int flywheel(double velocity, double currentVelocity, int prevError) {
     //printf("%d %d\n", error);
     //printf("%d %d\n", errorTotal);
 
-    delay(20);
+    //delay(100);
     prevError = error;
     return prevError;
 }
@@ -128,10 +130,12 @@ void getTo(int rotationsL, int rotationsR) {
       currentR = 0;
     }*/
     chassisSet(currentL, currentR);
+    /*
     printf("--%d %d--\n", currentL, currentR);
     printf("%d %d\n", rotationsL - errorL, rotationsR - errorR);
     printf("%d %d\n", errorL, errorR);
     printf("%d %d\n", errorTotalL, errorTotalR);
+    */
     delay(20);
   }
 }
