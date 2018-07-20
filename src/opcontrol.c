@@ -58,8 +58,9 @@ void operatorControl() {
   int previousTicks = 0;
   int currentTicks = 0;
   int previousTime = 0;
-  int previousVelocity = 0;
-  int currentVelocity = 0;
+  int currentTime = millis();
+  //double previousVelocity = 0;
+  double currentVelocity = 0;
   int error = 0;
     // whether power and turn values are positive or 0
     bool powerPositive = false;
@@ -68,7 +69,7 @@ void operatorControl() {
     // calls and initializations, thus speed up program
     int encoderLDegrees = 0;
     int encoderRDegrees = 0;
-    int encoderFDegrees = 0;
+    //int encoderFDegrees = 0;
 	while (1) {
 		power = joystickGetAnalog(1, 3); // vertical axis on left joystick
         turn  = joystickGetAnalog(1, 1); // horizontal axis on right joystick
@@ -76,7 +77,7 @@ void operatorControl() {
         encoderLDegrees = encoderGet(encoderL); // save encoder values as ints
         encoderRDegrees = encoderGet(encoderR); //so you don't have to call
                                                 // function every time
-        encoderFDegrees = encoderGet(encoderF);
+        //encoderFDegrees = encoderGet(encoderF);
         /* check if either:
               power has shifted from positive to 0, and
               the turn value is either within deadzone or 0
@@ -87,8 +88,9 @@ void operatorControl() {
             thus we want to remain at this exact position, thus capture the
             current encoder values to set as the goal we want to get to
         */
-        currentTicks = previousTicks + previousVelocity*(millis() - previousTime);
-        currentVelocity = (previousVelocity * previousTime + currentTicks - previousTicks) / millis();
+        currentTime = millis();
+        currentTicks = encoderGet(encoderF);
+        currentVelocity = (currentTicks - previousTicks) / (currentTime - previousTime);
         error = flywheel(500, currentVelocity, error);
         if (
               (power < 20 && power > -20 && powerPositive &&
@@ -124,6 +126,7 @@ void operatorControl() {
             turn -= 10;
             turnPositive = true;
         }
+        printf("%f %d\n", currentVelocity, currentTicks);
 
         // set chassis speed (left, right) based on power and turn values
         chassisSet(power+turn, power-turn); // accessed from chassis.c
@@ -133,8 +136,8 @@ void operatorControl() {
         }
         delay(20);
         previousTicks = currentTicks;
-        previousTime = millis();
-        previousVelocity = currentVelocity;
+        previousTime = currentTime;
+        //previousVelocity = currentVelocity;
 
     }
 }

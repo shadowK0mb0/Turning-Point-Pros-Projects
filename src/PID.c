@@ -13,7 +13,7 @@ void flywheelSet(int current) {
   motorSet(7, current);
 }
 
-int flywheel(int velocity, int currentVelocity, int prevError) {
+int flywheel(double velocity, double currentVelocity, int prevError) {
   // initialize sensor error variables
   int error = velocity - currentVelocity;
 
@@ -46,12 +46,12 @@ int flywheel(int velocity, int currentVelocity, int prevError) {
     }*/
 
     flywheelSet(current);
-    /*
-    printf("--%d %d--\n", current);
-    printf("%d %d\n", rotations - error);
-    printf("%d %d\n", error);
-    printf("%d %d\n", errorTotal);
-    */
+
+    //printf("--%d %d--\n", current);
+    //printf("%d %d\n", rotations - error);
+    //printf("%d %d\n", error);
+    //printf("%d %d\n", errorTotal);
+
     delay(20);
     prevError = error;
     return prevError;
