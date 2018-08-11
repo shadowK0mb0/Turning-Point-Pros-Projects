@@ -24,7 +24,7 @@
  *
  * If no VEX Competition Switch or Field Management system is plugged in, the VEX Cortex will
  * run the operator control task. Be warned that this will also occur if the VEX Cortex is
- * tethered directly to a computer via the USB A to A cable without any VEX Joystick attached.
+ * tethered directl y to a computer via the USB A to A cable without any VEX Joystick attached.
  *
  * Code running in this task can take almost any action, as the VEX Joystick is available and
  * the scheduler is operational. However, proper use of delay() or taskDelayUntil() is highly
@@ -32,6 +32,9 @@
  *
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
+void liftSet(int speed) {
+  motorSet(7, speed);
+}
 
 void aauto() {
   delay(1000);
@@ -53,6 +56,8 @@ void operatorControl() {
 	encoderReset(encoderL); // clear encoders
 	encoderReset(encoderR);
   encoderReset(encoderF);
+
+
 
   //stuff for flywheel :|
   int previousTicks = 0;
@@ -77,6 +82,16 @@ void operatorControl() {
         encoderLDegrees = encoderGet(encoderL); // save encoder values as ints
         encoderRDegrees = encoderGet(encoderR); //so you don't have to call
                                                 // function every time
+
+        if (joystickGetDigital(1,6, JOY_UP)) {
+          liftSet(127);
+        }
+        else if (joystickGetDigital(1,6, JOY_DOWN)) {
+          liftSet(-127));
+        }
+        else {
+          liftSet(0);
+        }
         //encoderFDegrees = encoderGet(encoderF);
         /* check if either:
               power has shifted from positive to 0, and
