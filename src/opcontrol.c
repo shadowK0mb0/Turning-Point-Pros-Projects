@@ -12,6 +12,7 @@
 
 #include "main.h"
 #include "chassis.h"
+//#include "turn.h"
 #include "PID.h"
 
 /*
@@ -32,26 +33,42 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 
+
+
 void aauto() {
   delay(1000);
   // initialize static variables
   double PI = 3.14159265358979323846;
-  int rotations = (int)(20*360/(4*PI));
-
-  chassisSet(100,100);
-  //getTo(rotations, rotations);
+  int rotations = (int)(50*360/(4*PI));
+  getTo(rotations, rotations);
+}
+void liftSet (int speed) {
+    motorSet(7,speed);
 }
 void operatorControl() {
-    aauto();
-	//delay(10000);
+	//aauto();
+	//delay(10000000);
 	int power; // forward backward speed
  	int turn; // turn power
 
     int encoderPosL = 0; // left encoder position for PID maintain
     int encoderPosR = 0; // right encoder position for PID maintain
+    //int encoderPosF = 0;
 
 	encoderReset(encoderL); // clear encoders
 	encoderReset(encoderR);
+  encoderReset(encoderF);
+
+  //stuff for flywheel :|
+  int previousTicks = 0;
+  int currentTicks = 0;
+  int previousTime = 0;
+  int currentTime = millis();
+  //double previousVelocity = 0;
+  int currentVelocity = 0;
+  int velocityError = 0;
+  int velocityPrevError = 0;
+  int goalVelocity = 0;
     // whether power and turn values are positive or 0
     bool powerPositive = false;
     bool turnPositive = false;
@@ -59,6 +76,7 @@ void operatorControl() {
     // calls and initializations, thus speed up program
     int encoderLDegrees = 0;
     int encoderRDegrees = 0;
+    //int encoderFDegrees = 0;
 	while (1) {
 		power = joystickGetAnalog(1, 3); // vertical axis on left joystick
         turn  = joystickGetAnalog(1, 1); // horizontal axis on right joystick
@@ -66,6 +84,7 @@ void operatorControl() {
         encoderLDegrees = encoderGet(encoderL); // save encoder values as ints
         encoderRDegrees = encoderGet(encoderR); //so you don't have to call
                                                 // function every time
+        //encoderFDegrees = encoderGet(encoderF);
         /* check if either:
               power has shifted from positive to 0, and
               the turn value is either within deadzone or 0
@@ -75,7 +94,13 @@ void operatorControl() {
             this means that the joystick has just stopped giving input to motors
             thus we want to remain at this exact position, thus capture the
             current encoder values to set as the goal we want to get to
-        */
+        *//*
+        currentTime = millis();
+        currentTicks = encoderGet(encoderF);
+        currentVelocity = (int)(1000*(double)(currentTicks - previousTicks) / (6*(currentTime - previousTime)));
+        velocityError = goalVelocity - currentVelocity;
+        velocityPrevError = flywheel(velocityError, velocityPrevError);
+        //flywheelSet(127);
         if (
               (power < 20 && power > -20 && powerPositive &&
               ((turn < 20 && turn > -20) || !turnPositive))
@@ -87,7 +112,18 @@ void operatorControl() {
                // at this position
                encoderPosL = encoderLDegrees;
                encoderPosR = encoderRDegrees;
+               //encoderPosF = encoderFDegrees;
+        }*/
+
+        /*if (joystickGetDigital(1,6, JOY_UP)) {
+          liftSet(127);
         }
+        else if (joystickGetDigital(1,6, JOY_DOWN)) {
+          liftSet(-127);
+        }
+        else {
+          liftSet(0);
+      }*/
         // deadzone code, if joystick value is smaller than certain amount
         // running the motors at that power will accomplish nothing, so
         // just set them to 0
@@ -109,14 +145,19 @@ void operatorControl() {
             turn -= 10;
             turnPositive = true;
         }
+        printf("%f %d\n", currentVelocity, currentTicks);
+        printf("%d %d\n", currentTime, previousTime);
 
         // set chassis speed (left, right) based on power and turn values
         chassisSet(power+turn, power-turn); // accessed from chassis.c
-        // if no joystick input, then enable stationary PID using the
-        // previously captured encoder positions
-        if (!powerPositive && !turnPositive) {
+        //
+        /*if (!powerPositive && !turnPositive) {
             getTo(encoderPosL, encoderPosR);
-        }
+        }*/
         delay(20);
+        previousTicks = currentTicks;
+        previousTime = currentTime;
+        //previousVelocity = currentVelocity;
+
     }
 }
