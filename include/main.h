@@ -39,6 +39,7 @@
 Encoder encoderL;
 Encoder encoderR;
 Encoder encoderF;
+//int flywheelSpeed;
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus
 extern "C" {

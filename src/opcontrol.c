@@ -33,12 +33,17 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 
+
+
 void aauto() {
   delay(1000);
   // initialize static variables
   double PI = 3.14159265358979323846;
   int rotations = (int)(50*360/(4*PI));
   getTo(rotations, rotations);
+}
+void liftSet (int speed) {
+    motorSet(7,speed);
 }
 void operatorControl() {
 	//aauto();
@@ -60,8 +65,10 @@ void operatorControl() {
   int previousTime = 0;
   int currentTime = millis();
   //double previousVelocity = 0;
-  double currentVelocity = 0;
-  int error = 0;
+  int currentVelocity = 0;
+  int velocityError = 0;
+  int velocityPrevError = 0;
+  int goalVelocity = 0;
     // whether power and turn values are positive or 0
     bool powerPositive = false;
     bool turnPositive = false;
@@ -87,11 +94,12 @@ void operatorControl() {
             this means that the joystick has just stopped giving input to motors
             thus we want to remain at this exact position, thus capture the
             current encoder values to set as the goal we want to get to
-        */
+        *//*
         currentTime = millis();
         currentTicks = encoderGet(encoderF);
-        currentVelocity = 1000*(double)(currentTicks - previousTicks) / (6*(currentTime - previousTime)) ;
-        error = flywheel(100, currentVelocity, error);
+        currentVelocity = (int)(1000*(double)(currentTicks - previousTicks) / (6*(currentTime - previousTime)));
+        velocityError = goalVelocity - currentVelocity;
+        velocityPrevError = flywheel(velocityError, velocityPrevError);
         //flywheelSet(127);
         if (
               (power < 20 && power > -20 && powerPositive &&
@@ -105,7 +113,17 @@ void operatorControl() {
                encoderPosL = encoderLDegrees;
                encoderPosR = encoderRDegrees;
                //encoderPosF = encoderFDegrees;
+        }*/
+
+        /*if (joystickGetDigital(1,6, JOY_UP)) {
+          liftSet(127);
         }
+        else if (joystickGetDigital(1,6, JOY_DOWN)) {
+          liftSet(-127);
+        }
+        else {
+          liftSet(0);
+      }*/
         // deadzone code, if joystick value is smaller than certain amount
         // running the motors at that power will accomplish nothing, so
         // just set them to 0
@@ -132,11 +150,11 @@ void operatorControl() {
 
         // set chassis speed (left, right) based on power and turn values
         chassisSet(power+turn, power-turn); // accessed from chassis.c
-        // i
+        //
         /*if (!powerPositive && !turnPositive) {
             getTo(encoderPosL, encoderPosR);
         }*/
-        delay(100);
+        delay(20);
         previousTicks = currentTicks;
         previousTime = currentTime;
         //previousVelocity = currentVelocity;

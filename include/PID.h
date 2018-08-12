@@ -5,7 +5,7 @@
 void getTo(int rotationsL, int rotationsR);
 
 // Sets the speeds of the flywheel
-int flywheel(double velocity, double currentVelocity, int previouserror);
+int flywheel(double error, int prevError);
 
 void flywheelSet(int current);
 

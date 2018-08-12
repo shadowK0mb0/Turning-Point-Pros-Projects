@@ -13,20 +13,19 @@ void flywheelSet(int current) {
   motorSet(7, current);
 }
 
+
+
 //Velocity is in RPM
-int flywheel(double velocity, double currentVelocity, int prevError) {
-  // initialize sensor error variables
-  int error = velocity - currentVelocity;
+int flywheel(double error, int prevError) {
+    // initialize sensor error variable
 
-  // initialize pid coefficients
-  double kp = 0.121;
-  double kd = 0.071;
-  // declare PID error values
-  double proportionalError;
-  double differentialError;
-  int current;
-
-
+    // initialize pid coefficients
+    double kp = 0.121;
+    double kd = 0.071;
+    // declare PID error values
+    double proportionalError;
+    double differentialError;
+    int current;
 
     //error = rotations - encoderGet(encoderF);
 
@@ -47,7 +46,8 @@ int flywheel(double velocity, double currentVelocity, int prevError) {
     }*/
 
     //flywheelSet(current);
-    flywheelSet(current);
+    flywheelSpeed += current;
+    flywheelSet(flywheelSpeed);
 
     //printf("--%d %d--\n", current);
     //printf("%d %d\n", rotations - error);
@@ -55,8 +55,8 @@ int flywheel(double velocity, double currentVelocity, int prevError) {
     //printf("%d %d\n", errorTotal);
 
     //delay(100);
-    prevError = error;
-    return prevError;
+
+    return error;
 }
 
 
