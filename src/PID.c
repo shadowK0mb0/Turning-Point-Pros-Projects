@@ -46,8 +46,8 @@ int flywheel(double error, int prevError) {
     }*/
 
     //flywheelSet(current);
-    flywheelSpeed += current;
-    flywheelSet(flywheelSpeed);
+    //flywheelSpeed += current;
+    //flywheelSet(flywheelSpeed);
 
     //printf("--%d %d--\n", current);
     //printf("%d %d\n", rotations - error);
