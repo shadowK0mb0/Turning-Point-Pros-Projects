@@ -94,7 +94,8 @@ void operatorControl() {
             this means that the joystick has just stopped giving input to motors
             thus we want to remain at this exact position, thus capture the
             current encoder values to set as the goal we want to get to
-        *//*
+        */
+        /*
         currentTime = millis();
         currentTicks = encoderGet(encoderF);
         currentVelocity = (int)(1000*(double)(currentTicks - previousTicks) / (6*(currentTime - previousTime)));
@@ -115,7 +116,7 @@ void operatorControl() {
                //encoderPosF = encoderFDegrees;
         }*/
 
-        /*if (joystickGetDigital(1,6, JOY_UP)) {
+        if (joystickGetDigital(1,6, JOY_UP)) {
           liftSet(127);
         }
         else if (joystickGetDigital(1,6, JOY_DOWN)) {
@@ -123,7 +124,7 @@ void operatorControl() {
         }
         else {
           liftSet(0);
-      }*/
+      }
         // deadzone code, if joystick value is smaller than certain amount
         // running the motors at that power will accomplish nothing, so
         // just set them to 0
