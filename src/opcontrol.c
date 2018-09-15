@@ -42,8 +42,27 @@ void aauto() {
   int rotations = (int)(50*360/(4*PI));
   getTo(rotations, rotations);
 }
-void liftSet (int speed) {
+void intakeSet (int speed) {
     motorSet(7,speed);
+}
+void liftSet(int speed) {
+  motorSet(10, speed);
+}
+void catapultMove(int speed) {
+  motorSet(8, speed);
+  motorSet(9, -speed);
+}
+void catapultSet() {
+  while(analogRead(1) < 2600) {
+    catapultMove(120);
+  }
+  catapultMove(0);
+}
+void catapultThrow() {
+  while (analogRead(1) > 1600) {
+    catapultMove(120);
+  }
+  catapultMove(0);
 }
 void operatorControl() {
 	//aauto();
@@ -116,14 +135,24 @@ void operatorControl() {
                //encoderPosF = encoderFDegrees;
         }*/
 
-        if (joystickGetDigital(1,6, JOY_UP)) {
-          liftSet(127);
+        if (joystickGetDigital(1,8, JOY_LEFT)) {
+          intakeSet(120);
         }
-        else if (joystickGetDigital(1,6, JOY_DOWN)) {
-          liftSet(-127);
+        else if (joystickGetDigital(1,8, JOY_DOWN)) {
+          intakeSet(-120);
         }
         else {
-          liftSet(0);
+          intakeSet(0);
+      }
+
+      if (joystickGetDigital(1,5, JOY_UP)) {
+        liftSet(120);
+      }
+      else if (joystickGetDigital(1,5, JOY_DOWN)) {
+        liftSet(-120);
+      }
+      else {
+        liftSet(0);
       }
         // deadzone code, if joystick value is smaller than certain amount
         // running the motors at that power will accomplish nothing, so
