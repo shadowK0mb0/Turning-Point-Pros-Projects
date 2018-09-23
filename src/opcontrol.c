@@ -42,15 +42,28 @@ void aauto() {
   int rotations = (int)(50*360/(4*PI));
   getTo(rotations, rotations);
 }
+
 void intakeSet (int speed) {
     motorSet(7,speed);
 }
 void liftSet(int speed) {
   motorSet(10, speed);
 }
+
 void catapultMove(int speed) {
   motorSet(8, speed);
   motorSet(9, -speed);
+}
+void catapultTest() {
+  if (joystickGetDigital(1, 6, JOY_UP)) {
+    catapultMove(120);
+  }
+  else if (joystickGetDigital(1,6, JOY_DOWN)){
+    catapultMove(-120);
+  }
+  else {
+    catapultMove(0);
+  }
 }
 void catapultSet() {
   while(analogRead(1) < 2600) {
@@ -92,7 +105,7 @@ void operatorControl() {
     bool powerPositive = false;
     bool turnPositive = false;
     // current encoder values, we save them as ints to minimize function
-    // calls and initializations, thus speed up program
+    // calls and initializ`ations, thus speed up program
     int encoderLDegrees = 0;
     int encoderRDegrees = 0;
     //int encoderFDegrees = 0;
@@ -154,6 +167,8 @@ void operatorControl() {
       else {
         liftSet(0);
       }
+
+      catapultTest();
         // deadzone code, if joystick value is smaller than certain amount
         // running the motors at that power will accomplish nothing, so
         // just set them to 0
