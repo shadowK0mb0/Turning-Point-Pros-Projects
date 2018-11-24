@@ -37,20 +37,14 @@
 
 
 
-void aauto() {
-  delay(1000);
-  // initialize static variables
-  double PI = 3.14159265358979323846;
-  int rotations = (int)(50*360/(4*PI));
-  getTo(rotations, rotations);
-}
 
 void intakeSet (int speed) {
-    motorSet(7,speed);
+    motorSet(10,speed);
 }
 void liftSet(int speed) {
-  motorSet(10, speed);
+  motorSet(7, speed);
 }
+
 
 
 void operatorControl() {
@@ -135,15 +129,14 @@ void operatorControl() {
           intakeSet(0);
         }
 
-        if (joystickGetDigital(1,5, JOY_UP)) {
-            liftSet(120);
-        }
-        else if (joystickGetDigital(1,5, JOY_DOWN)) {
-            liftSet(-120);
+        if (joystickGetDigital(1,7, JOY_UP)) {
+          catapultMove(120);
         }
         else {
-            liftSet(0);
+          catapultMove(0);
         }
+
+
         /*if (!powerPositive && !turnPositive) {
             getTo(encoderPosL, encoderPosR);
         }*/

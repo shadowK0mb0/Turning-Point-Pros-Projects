@@ -2,7 +2,7 @@
 
 void catapultMove(int speed) { // use positive number
   motorSet(8, speed);
-  motorSet(9, -speed);
+   motorSet(7, -speed);
 }
 
 void catapultSet() {

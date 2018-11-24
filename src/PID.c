@@ -35,8 +35,13 @@ int flywheel(double error, int prevError) {
     if (error == 0) {
       differentialError = 0;
     }
-
     current = (int)(proportionalError + differentialError);
+
+    if (current > 0) {
+        current += 5;
+    } else {
+        current -= 5;
+    }
 
     /*if (currentL < 0) {
       currentL = 0;

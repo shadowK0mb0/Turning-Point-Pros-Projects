@@ -12,10 +12,10 @@ void chassisSet(int left, int right) {
   } else if (right < -120) {
     right = -120;
 }
-  motorSet(1, right);
-  motorSet(2, right);
-  motorSet(3, -left);
-  motorSet(4, left);
-  motorSet(5, left);
-  motorSet(6, -right);
+  motorSet(1, -left);
+  motorSet(2, left);
+  motorSet(3, right);
+  motorSet(4, -right);
+  motorSet(5, -right);
+  motorSet(6, left);
 }
