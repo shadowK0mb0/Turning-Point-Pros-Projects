@@ -1,4 +1,4 @@
-/** @file opcontrol.c
+/** @file opcontrol.c*
  * @brief File for operator control code
  *
  * This file should contain the user operatorControl() function and any functions related to it.
@@ -41,8 +41,8 @@
 void intakeSet (int speed) {
     motorSet(10,speed);
 }
-void liftSet(int speed) {
-  motorSet(7, speed);
+void grabSet(int speed) {
+  motorSet(9, speed);
 }
 
 
@@ -134,6 +134,16 @@ void operatorControl() {
         }
         else {
           catapultMove(0);
+        }
+
+        if (joystickGetDigital(1,5, JOY_UP)) {
+          grabSet(120);
+        }
+        else if (joystickGetDigital(1,5, JOY_DOWN)) {
+          grabSet(-120);
+        }
+        else {
+          grabSet(0);
         }
 
 
