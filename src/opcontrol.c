@@ -45,10 +45,6 @@ void grabSet(int speed) {
   motorSet(9, speed);
 }
 
-void catapultSet(int speed) {
-  motorSet()
-}
-
 
 
 void operatorControl() {
@@ -134,9 +130,9 @@ void operatorControl() {
         }
 
         if (joystickGetDigital(1,7, JOY_UP)) {
-          catapultSet(120);
+          catapultSet();
         }
-        else {
+        if (joystickGetDigital(1,7, JOY_LEFT)){
           catapultThrow();
         }
 

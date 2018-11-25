@@ -6,7 +6,7 @@ void catapultMove(int speed) { // use positive number
 }
 
 void catapultSet() {
-  while(analogRead(1) < 2600) {
+  while(analogRead(1) < 2570) {
     catapultMove(120);
   }
   catapultMove(0);
