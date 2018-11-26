@@ -130,7 +130,7 @@ void operatorControl() {
         }
 
         if (joystickGetDigital(1,7, JOY_UP)) {
-          catapultSet();
+          catapultSet(2570);
         }
         if (joystickGetDigital(1,7, JOY_LEFT)){
           catapultThrow();

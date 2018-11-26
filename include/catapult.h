@@ -4,7 +4,7 @@
 // Sets the speeds of the left and right wheels of the chassis
 void catapultMove(int speed);
 
-void catapultSet();
+void catapultSet(int distance);
 
 void catapultThrow();
 

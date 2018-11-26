@@ -65,24 +65,6 @@ int flywheel(double error, int prevError) {
     return error;
 }
 
-void catapult(int distance) {
-  int error = distance - analogRead(1);
-
-  double kp = 0.1;
-
-  double proportionalError;
-
-
-  while (true) {
-    error = distance - analogRead(1);
-    if (error < 0.1) {
-      return;
-    }
-    proportionalError = error * kp;
-    catapultMove((int)proportionalError);
-    delay(20);
-  }
-}
 
 
 // turning right
