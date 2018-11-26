@@ -46,16 +46,16 @@ void grabSet(int speed) {
 }
 
 
-void driveDistance(double distance) {
+void driveDistance(double distance, double kp, double ki, double kd) {
    // initialize static variables
    double PI = 3.14159265358979323846;
    int rotations = (int)(distance*360/(4*PI));
-   getTo(rotations, rotations);
+   getTo(rotations, rotations, kp, ki, kd);
 }
 
 // positive degrees is right, negative is left
-void turn(double degrees) {
-  getTo(-degrees/2,degrees/2);
+void turn(double degrees, double kp, double ki, double kd) {
+  getTo(-degrees/2,degrees/2, kp, ki, kd);
 }
 
 void operatorControl() {
@@ -138,6 +138,13 @@ void operatorControl() {
         }
         else {
           intakeSet(0);
+        }
+
+        if (joystickGetDigital(1,6, JOY_UP)) {
+          catapultMove(120);
+        }
+        else {
+          catapultMove(0);
         }
 
         if (joystickGetDigital(1,7, JOY_UP)) {

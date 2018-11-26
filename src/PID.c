@@ -68,7 +68,7 @@ int flywheel(double error, int prevError) {
 
 
 // turning right
-void getTo(int rotationsL, int rotationsR) {
+void getTo(int rotationsL, int rotationsR, double kp, double ki, double kd) {
   encoderReset(encoderL);
   encoderReset(encoderR);
   // initialize sensor error variables
@@ -78,10 +78,6 @@ void getTo(int rotationsL, int rotationsR) {
   int prevErrorR = errorR;
   int errorTotalL;
   int errorTotalR;
-  // initialize pid coefficients
-  double kp = 0.121;
-  double ki = 0.005;
-  double kd = 0.071;
   // declare PID error values
   double proportionalErrorL;
   double proportionalErrorR;
@@ -99,7 +95,7 @@ void getTo(int rotationsL, int rotationsR) {
     prevErrorR = errorR;
     errorL = rotationsL - encoderGet(encoderL);
     errorR = rotationsR - encoderGet(encoderR);
-    if (errorL < 0.1 && errorR < 0.1) {
+    if (errorL < 0.1) {
       return;
     }
 
