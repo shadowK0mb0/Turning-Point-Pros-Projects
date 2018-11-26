@@ -1,4 +1,5 @@
 #include "main.h"
+#include "PID.h"
 
 
 void catapultMove(int speed) { // use positive number
@@ -7,10 +8,7 @@ void catapultMove(int speed) { // use positive number
 }
 
 void catapultSet() {
-  while(analogRead(1) < 2570) {
-    catapultMove(120);
-  }
-  catapultMove(0);
+  catapult(2570);
 }
 void catapultThrow() {
   while (analogRead(1) > 1600) {

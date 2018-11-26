@@ -1,6 +1,7 @@
 #include "main.h"
 #include "chassis.h"
 #include "PID.h"
+#include "catapult.h"
 
 void flywheelSet(int current) {
   if (current > 120) {
@@ -64,6 +65,24 @@ int flywheel(double error, int prevError) {
     return error;
 }
 
+void catapult(int distance) {
+  int error = distance - analogRead(1);
+
+  double kp = 0.1;
+
+  double proportionalError;
+
+
+  while (true) {
+    error = distance - analogRead(1);
+    if (error < 0.1) {
+      return;
+    }
+    proportionalError = error * kp;
+    catapultMove((int)proportionalError);
+    delay(20);
+  }
+}
 
 
 // turning right
@@ -99,7 +118,7 @@ void getTo(int rotationsL, int rotationsR) {
     errorL = rotationsL - encoderGet(encoderL);
     errorR = rotationsR - encoderGet(encoderR);
     if (errorL < 0.1 && errorR < 0.1) {
-      break;
+      return;
     }
 
     // only accumulate integral value when close to target
