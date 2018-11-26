@@ -36,7 +36,15 @@
      getTo(rotations, rotations);
   }
 
-void autonomous() {
+  // positive degrees is right, negative is left
+  void turn(double degrees) {
+    getTo(-degrees/2,degrees/2);
+  }
 
+void autonomous() {
+  driveDistance(3);
+  driveDistance(-1);
+  turn(-90);
+  driveDistance(1);
 
 }

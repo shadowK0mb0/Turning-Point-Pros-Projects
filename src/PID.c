@@ -98,6 +98,9 @@ void getTo(int rotationsL, int rotationsR) {
     prevErrorR = errorR;
     errorL = rotationsL - encoderGet(encoderL);
     errorR = rotationsR - encoderGet(encoderR);
+    if (errorL < 0.1 && errorR < 0.1) {
+      break;
+    }
 
     // only accumulate integral value when close to target
     if (abs(errorL) < integralActiveZone && errorL != 0) {
