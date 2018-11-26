@@ -46,6 +46,17 @@ void grabSet(int speed) {
 }
 
 
+void driveDistance(double distance) {
+   // initialize static variables
+   double PI = 3.14159265358979323846;
+   int rotations = (int)(distance*360/(4*PI));
+   getTo(rotations, rotations);
+}
+
+// positive degrees is right, negative is left
+void turn(double degrees) {
+  getTo(-degrees/2,degrees/2);
+}
 
 void operatorControl() {
 	//aauto();
