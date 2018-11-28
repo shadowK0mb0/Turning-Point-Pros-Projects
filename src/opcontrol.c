@@ -45,19 +45,6 @@ void grabSet(int speed) {
   motorSet(9, speed);
 }
 
-
-void driveDistance(double distance, double kp, double ki, double kd) {
-   // initialize static variables
-   double PI = 3.14159265358979323846;
-   int rotations = (int)(distance*360/(4*PI));
-   getTo(rotations, rotations, kp, ki, kd);
-}
-
-// positive degrees is right, negative is left
-void turn(double degrees, double kp, double ki, double kd) {
-  getTo(-degrees/2,degrees/2, kp, ki, kd);
-}
-
 void operatorControl() {
 	//aauto();
 	//delay(10000000);
@@ -148,7 +135,7 @@ void operatorControl() {
         }
 
         if (joystickGetDigital(1,7, JOY_UP)) {
-          catapultSet(2570);
+          catapultSet(1500);
         }
         if (joystickGetDigital(1,7, JOY_LEFT)){
           catapultThrow();
