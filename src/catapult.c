@@ -14,8 +14,7 @@ void catapultSet(int distance) {
     double kp = 0.1;
 
     double proportionalError = 0;
-
-
+    
     while (true) {
         error = distance - analogRead(1);
         if (error < 50) {
