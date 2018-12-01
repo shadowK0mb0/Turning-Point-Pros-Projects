@@ -72,10 +72,17 @@
  }
 
 void tempauton() {
-  intakeSet(-120);
-  driveDistance(-43);
-  delay(500);
-  driveDistance(43);
+
+  driveDistance(24.6);
+  chassisSet(-40,40);
+  delay(510);
+  chassisSet(30,30);
+  delay(400);
+  chassisSet(110,110);
+  delay(3050);
+  chassisSet(-50,-50);
+  delay(30);
+  chassisSet(0,0);
 }
 
 void auton() {
@@ -95,8 +102,9 @@ void auton() {
   delay(1000);
   chassisSet(-30,-30);
   delay(100);
-  chassisSet(-40,40);
+  chassisSet(40,-40);
   delay(580);
+  chassisSet(0,0);
   catapultThrow();
 }
 
@@ -172,10 +180,10 @@ void operatorControl() {
         chassisSet(leftSide,rightSide); // accessed from chassis.c
 
         if (joystickGetDigital(1, 8, JOY_UP)) {
-          auton();
-          encoderReset(encoderL);
-          encoderReset(encoderR);
-        }
+          //tempauton();
+         // encoderReset(encoderL);
+          //encoderReset(encoderR);
+      }
 
         if (joystickGetDigital(1,6, JOY_DOWN)) {
           intakeSet(120);
