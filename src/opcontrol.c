@@ -35,21 +35,39 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 
+ void intakeSet (int speed) {
+     motorSet(10,speed);
+ }
+ void grabSet(int speed) {
+   motorSet(9, speed);
+ }
 
 
-
-void intakeSet (int speed) {
-    motorSet(10,speed);
+void auton() {
+  //catapultSet(1000);
+  //grabSet(-120);
+  /*delay(50);
+  grabSet(0);
+  delay(200);
+  chassisSet(-50,-50);
+  delay(800);
+  intakeSet(-120);
+  delay(700);
+  chassisSet(0,0);
+  delay(1250);
+  chassisSet(30,30);
+  delay(1000);
+  intakeSet(0);
+  chassisSet(-30,-30);
+  delay(100);*/
+  chassisSet(30,-30);
+  delay(600);
+  chassisSet(30,30);
+  delay(800);
 }
-void grabSet(int speed) {
-  motorSet(9, speed);
-}
+
 
 void operatorControl() {
-  double pi = 3.14159265359;
-  int rotations = (int)(50*360/(4*pi));
-	//getTo(rotations,rotations,0.121,0.1,0.071);
-	//delay(10000000);
 	int power = 0; // forward backward speed
  	int turn = 0; // turn power
 
@@ -118,6 +136,12 @@ void operatorControl() {
         rightSide = power-turn;
         // set chassis speed (left, right) based on power and turn values
         chassisSet(leftSide,rightSide); // accessed from chassis.c
+
+        if (joystickGetDigital(1, 8, JOY_UP)) {
+          auton();
+          encoderReset(encoderL);
+          encoderReset(encoderR);
+        }
 
         if (joystickGetDigital(1,6, JOY_DOWN)) {
           intakeSet(120);

@@ -72,60 +72,60 @@ void getTo(int rotationsL, int rotationsR, double kp, double ki, double kd) {
   encoderReset(encoderL);
   encoderReset(encoderR);
   // initialize sensor error variables
-  int errorL = rotationsL - encoderGet(encoderL);
+  //int errorL = rotationsL - encoderGet(encoderL);
   int errorR = rotationsR - encoderGet(encoderR);
-  int prevErrorL = errorL;
+  //int prevErrorL = errorL;
   int prevErrorR = errorR;
-  int errorTotalL;
+  //int errorTotalL;
   int errorTotalR;
   // declare PID error values
-  double proportionalErrorL;
+  //double proportionalErrorL;
   double proportionalErrorR;
-  double integralErrorL;
+  //double integralErrorL;
   double integralErrorR;
-  double differentialErrorL;
+  //double differentialErrorL;
   double differentialErrorR;
   int integralActiveZone = 120; // ticks away from target
-  int currentL;
+  //int currentL;
   int currentR;
 
   while (true) {
     // update sensor error variables
-    prevErrorL = errorL;
+    //prevErrorL = errorL;
     prevErrorR = errorR;
-    errorL = rotationsL - encoderGet(encoderL);
+    //errorL = rotationsL - encoderGet(encoderL);
     errorR = rotationsR - encoderGet(encoderR);
-    if (errorL < 0.1) {
+    /*if (errorR < 0.1) {
       return;
-    }
+    }*/
 
     // only accumulate integral value when close to target
-    if (abs(errorL) < integralActiveZone && errorL != 0) {
+    /*if (abs(errorL) < integralActiveZone && errorL != 0) {
       errorTotalL += errorL;
     } else {
       errorTotalL = 0;
-    }
+    }*/
     if (abs(errorR) < integralActiveZone && errorR != 0) {
       errorTotalR += errorR;
     } else {
       errorTotalR = 0;
     }
 
-    proportionalErrorL = errorL * kp;
+    //proportionalErrorL = errorL * kp;
     proportionalErrorR = errorR * kp;
-    integralErrorL = errorTotalL * ki;
+    //integralErrorL = errorTotalL * ki;
     integralErrorR = errorTotalR * ki;
-    differentialErrorL = (errorL - prevErrorL) * kd;
+    //differentialErrorL = (errorL - prevErrorL) * kd;
     differentialErrorR = (errorR - prevErrorR) * kd;
 
     if (errorR == 0) {
       differentialErrorR = 0;
     }
-    if (errorL == 0) {
+    /*if (errorL == 0) {
       differentialErrorL = 0;
-    }
+    }*/
 
-    currentL = (int)(proportionalErrorL + integralErrorL + differentialErrorL);
+    //currentL = (int)(proportionalErrorL + integralErrorL + differentialErrorL);
     currentR = (int)(proportionalErrorR + integralErrorR + differentialErrorR);
 
     /*if (currentL < 0) {
@@ -134,7 +134,8 @@ void getTo(int rotationsL, int rotationsR, double kp, double ki, double kd) {
     if (currentR < 0) {
       currentR = 0;
     }*/
-    chassisSet(currentL, currentR);
+
+    chassisSet(currentR, currentR);
     /*
     printf("--%d %d--\n", currentL, currentR);
     printf("%d %d\n", rotationsL - errorL, rotationsR - errorR);

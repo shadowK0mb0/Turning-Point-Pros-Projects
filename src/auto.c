@@ -33,7 +33,7 @@
      // initialize static variables
      double PI = 3.14159265358979323846;
      int rotations = (int)(distance*360/(4*PI));
-     getTo(rotations, rotations, 0.121,0.005,0.071);
+     getTo(rotations, rotations, 0.121,0.000,0.00);
   }
 
   // positive degrees is right, negative is left
