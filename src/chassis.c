@@ -14,8 +14,8 @@ void chassisSet(int left, int right) {
 }
   motorSet(1, -left);
   motorSet(2, left);
-  motorSet(3, right);
-  motorSet(4, -right);
+  motorSet(3, -right);
+  motorSet(4, right);
   motorSet(5, -right);
   motorSet(6, left);
 }

@@ -8,15 +8,14 @@ void catapultMove(int speed) { // use positive number
 }
 
 void catapultSet(int distance) {
-    int potVal = analogRead(1);
-    int error = potVal - distance;
+    int error = analogRead(1) - distance;
 
-    double kp = 0.1;
+    double kp = 0.61;
 
     double proportionalError = 0;
-    
+
     while (true) {
-        error = distance - analogRead(1);
+        error = analogRead(1)- distance;
         if (error < 50) {
             return;
         }

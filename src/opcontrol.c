@@ -46,7 +46,9 @@ void grabSet(int speed) {
 }
 
 void operatorControl() {
-	//aauto();
+  double pi = 3.14159265359;
+  int rotations = (int)(50*360/(4*pi));
+	//getTo(rotations,rotations,0.121,0.1,0.071);
 	//delay(10000000);
 	int power = 0; // forward backward speed
  	int turn = 0; // turn power
@@ -117,27 +119,27 @@ void operatorControl() {
         // set chassis speed (left, right) based on power and turn values
         chassisSet(leftSide,rightSide); // accessed from chassis.c
 
-        if (joystickGetDigital(1,8, JOY_DOWN)) {
+        if (joystickGetDigital(1,6, JOY_DOWN)) {
           intakeSet(120);
         }
-        else if (joystickGetDigital(1,8, JOY_LEFT)) {
+        else if (joystickGetDigital(1,6, JOY_UP)) {
           intakeSet(-120);
         }
         else {
           intakeSet(0);
         }
 
-        if (joystickGetDigital(1,6, JOY_UP)) {
+        if (joystickGetDigital(1,8, JOY_RIGHT)) {
           catapultMove(120);
         }
         else {
           catapultMove(0);
         }
 
-        if (joystickGetDigital(1,7, JOY_UP)) {
-          catapultSet(1500);
+        if (joystickGetDigital(1,8, JOY_LEFT)) {
+          catapultSet(1000);
         }
-        if (joystickGetDigital(1,7, JOY_LEFT)){
+        if (joystickGetDigital(1,8, JOY_DOWN)){
           catapultThrow();
         }
 
