@@ -42,13 +42,49 @@
    motorSet(9, speed);
  }
 
+ void pid() {
+   double PI = 3.14159265358979323846;
+   int rotations = (int)(23*360/(4*PI));
+   getTo(+2*rotations,-2*rotations,1,0,1);
+   intakeSet(-120);
+   delay(500);
+   getTo(rotations, rotations, 1,0,1);
+   intakeSet(0);
+   getTo(-90/2,90/2, 1, 0.0, 1);
+   getTo(rotations * 3/2, rotations * 3/2, 1,0,1);
+ }
+
+ void pid2() {
+   double PI = 3.14159265358979323846;
+   int rotations = (int)(23*360/(4*PI));
+   getTo(-2*rotations,-2*rotations,1,0,1);
+   intakeSet(-120);
+   delay(500);
+   getTo(2*rotations, 2*rotations, 1,0,1);
+   getTo(-90/2,90/2,1,0,1);
+   catapultThrow();
+   getTo(3*rotations, 3*rotations,1,0,1);
+   getTo(-1.5*rotations, -1.5*rotations,1,0,1);
+   getTo(90/2,-90/2,1,0,1);
+   getTo(-rotations, -rotations, 1, 0, 1);
+   // flip the cap somehow
+
+ }
+
+void tempauton() {
+  intakeSet(-120);
+  driveDistance(-43);
+  delay(500);
+  driveDistance(43);
+}
 
 void auton() {
   //catapultSet(1000);
   //grabSet(-120);
-  /*delay(50);
-  grabSet(0);
-  delay(200);
+  //delay(50);
+  //grabSet(0);
+  //delay(200);
+
   chassisSet(-50,-50);
   delay(800);
   intakeSet(-120);
@@ -57,13 +93,11 @@ void auton() {
   delay(1250);
   chassisSet(30,30);
   delay(1000);
-  intakeSet(0);
   chassisSet(-30,-30);
-  delay(100);*/
-  chassisSet(30,-30);
-  delay(600);
-  chassisSet(30,30);
-  delay(800);
+  delay(100);
+  chassisSet(-40,40);
+  delay(580);
+  catapultThrow();
 }
 
 

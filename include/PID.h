@@ -9,4 +9,6 @@ int flywheel(double error, int prevError);
 
 void flywheelSet(int current);
 
+void driveDistance(int distance);
+
 #endif // _CHASSIS_H_

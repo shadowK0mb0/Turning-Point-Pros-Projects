@@ -13,6 +13,7 @@
 #include "main.h"
 #include "chassis.h"
 #include "PID.h"
+#include "catapult.h"
 
 /*
  * Runs the user autonomous code. This function will be started in its own task with the default
@@ -29,12 +30,12 @@
  * so, the robot will await a switch to another mode or disable/enable cycle.
  */
 
-  void driveDistance(double distance) {
+  /*void driveDistance(double distance) {
      // initialize static variables
      double PI = 3.14159265358979323846;
      int rotations = (int)(distance*360/(4*PI));
      getTo(rotations, rotations, 0.121,0.000,0.00);
-  }
+  }*/
 
   // positive degrees is right, negative is left
   void turn(double degrees) {
@@ -42,9 +43,18 @@
   }
 
 void autonomous() {
-  driveDistance(3);
-  driveDistance(-1);
-  turn(-90);
-  driveDistance(1);
+  chassisSet(-50,-50);
+  delay(800);
+  motorSet(10,-120);
+  delay(700);
+  chassisSet(0,0);
+  delay(1250);
+  chassisSet(30,30);
+  delay(1000);
+  chassisSet(-30,-30);
+  delay(100);
+  chassisSet(40,-40);
+  delay(570);
+  //catapultThrow();
 
 }

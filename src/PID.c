@@ -65,9 +65,14 @@ int flywheel(double error, int prevError) {
     return error;
 }
 
-
+void driveDistance(int distance) {
+  double PI = 3.14159265358979323846;
+  int rotations = (int)(distance*360/(2.75*PI));
+  getTo(rotations,rotations,0.09,0,0.55);
+}
 
 // turning right
+// rotation units: degrees
 void getTo(int rotationsL, int rotationsR, double kp, double ki, double kd) {
   encoderReset(encoderL);
   encoderReset(encoderR);
@@ -95,9 +100,9 @@ void getTo(int rotationsL, int rotationsR, double kp, double ki, double kd) {
     prevErrorR = errorR;
     //errorL = rotationsL - encoderGet(encoderL);
     errorR = rotationsR - encoderGet(encoderR);
-    /*if (errorR < 0.1) {
+    if (errorR < 50) {
       return;
-    }*/
+    }
 
     // only accumulate integral value when close to target
     /*if (abs(errorL) < integralActiveZone && errorL != 0) {
@@ -144,4 +149,6 @@ void getTo(int rotationsL, int rotationsR, double kp, double ki, double kd) {
     */
     delay(20);
   }
+
+
 }
