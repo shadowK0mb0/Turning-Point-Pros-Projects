@@ -4,6 +4,11 @@
 // Sets the speeds of the left and right wheels of the chassis
 void getTo(int rotationsL, int rotationsR, double kp, double ki, double kd);
 
+void getToTurnLeft(int rotationsL, int rotationsR, double kp, double ki, double kd);
+
+
+void turnLeftDistance(int distance);
+
 // Sets the speeds of the flywheel
 int flywheel(double error, int prevError);
 

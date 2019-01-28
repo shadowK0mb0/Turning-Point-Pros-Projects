@@ -27,11 +27,11 @@
 // Digital port number for top and bottom port of quad encoder
 #define QUAD_LEFT_TOP_PORT 3
 #define QUAD_LEFT_BOTTOM_PORT 4
-#define QUAD_RIGHT_TOP_PORT 5
-#define QUAD_RIGHT_BOTTOM_PORT 6
+#define QUAD_RIGHT_TOP_PORT 6
+#define QUAD_RIGHT_BOTTOM_PORT 5
 #define QUAD_FLYWHEEL_TOP_PORT 7
 #define QUAD_FLYWHEEL_BOTTOM_PORT 8
-
+#define JUMPER_AUTON_TEST 1
 
 
 #include <API.h>

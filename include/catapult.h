@@ -4,8 +4,8 @@
 // Sets the speeds of the left and right wheels of the chassis
 void catapultMove(int speed);
 
-void catapultSet(int distance);
+bool catapultSet(int distance);
 
-void catapultThrow();
+bool catapultThrow();
 
 #endif // _CHASSIS_H_

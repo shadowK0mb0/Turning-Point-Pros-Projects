@@ -71,18 +71,53 @@
 
  }
 
-void tempauton() {
+ void skills() {
+     delay(2000);
+     motorSet(10, -120);
+     driveDistance(-40);
+     delay(300);
+     turnLeftDistance(-3);
+     driveDistance(45);
+     motorSet(10, 0);
+     turnLeftDistance(-4.9);
+     chassisSet(0,0);
+     delay(500);
+     //catapultThrow();
+     driveDistance(23);
+     delay(200);
+     driveDistance(-71);
+     turnLeftDistance(-9);
+     chassisSet(80,80);
+     delay(500);
+     chassisSet(0,0);
+ }
 
-  driveDistance(24.6);
-  chassisSet(-40,40);
-  delay(510);
-  chassisSet(30,30);
-  delay(400);
-  chassisSet(110,110);
-  delay(3050);
-  chassisSet(-50,-50);
-  delay(30);
-  chassisSet(0,0);
+void flagauton() {
+    delay(2000);
+    motorSet(10, -120);
+    driveDistance(-40);
+    delay(300);
+    turnLeftDistance(-3);
+    driveDistance(45);
+    motorSet(10, 0);
+    turnLeftDistance(-4.9);
+    chassisSet(0,0);
+    delay(500);
+    catapultThrow();
+    driveDistance(23);
+}
+
+void platAuton() {
+    delay(2000);
+    motorSet(10, -120);
+    driveDistance(-41);
+    delay(300);
+    driveDistance(11);
+    turnLeftDistance(9);
+    chassisSet(120,120);
+    delay(900);
+    chassisSet(0,0);
+
 }
 
 void auton() {
@@ -110,6 +145,7 @@ void auton() {
 
 
 void operatorControl() {
+
 	int power = 0; // forward backward speed
  	int turn = 0; // turn power
 
@@ -129,11 +165,15 @@ void operatorControl() {
     // whether power and turn values are positive or 0
     bool powerPositive = false;
     bool turnPositive = false;
+    bool catapultLoad = false;
+    bool catapultthrow = false;
+    bool rerun = true;
     // current encoder values, we save them as ints to minimize function
     // calls and initializ`ations, thus speed up program
     int encoderLDegrees = 0;
     int encoderRDegrees = 0;
     //int encoderFDegrees = 0;
+
 	while (1) {
 
         power = joystickGetAnalog(1, 3); // vertical axis on left joystick
@@ -161,6 +201,8 @@ void operatorControl() {
         } else {
             powerPositive = true;
         }
+
+
         // deadzone code for turn, however boost turn if it's not 0 to make it
         // more sensitive for driver to have easier time turning
         if (abs(turn) < 20) {
@@ -176,15 +218,30 @@ void operatorControl() {
 
         leftSide = power+turn;
         rightSide = power-turn;
+        if (abs(leftSide) > 127) {
+            int overshoot = leftSide % 127;
+            leftSide -= overshoot;
+            rightSide -= overshoot;
+        } else if (abs(rightSide) > 127) {
+            int overshoot = rightSide % 127;
+            leftSide -= overshoot;
+            rightSide -= overshoot;
+        }
+
         // set chassis speed (left, right) based on power and turn values
         chassisSet(leftSide,rightSide); // accessed from chassis.c
 
-        if (joystickGetDigital(1, 8, JOY_UP)) {
-          //tempauton();
-         // encoderReset(encoderL);
-          //encoderReset(encoderR);
-      }
+        /*if (joystickGetDigital(1, 8, JOY_UP)) {
+          tempauton();
+         encoderReset(encoderL);
+          encoderReset(encoderR);
+      }*/
+        if (digitalRead(JUMPER_AUTON_TEST) == HIGH && rerun) {
 
+            platAuton();
+
+            rerun = false;
+        }
         if (joystickGetDigital(1,6, JOY_DOWN)) {
           intakeSet(120);
         }
@@ -196,17 +253,28 @@ void operatorControl() {
         }
 
         if (joystickGetDigital(1,8, JOY_RIGHT)) {
+          catapultLoad = false;
+          catapultthrow = false;
           catapultMove(120);
+
         }
         else {
           catapultMove(0);
         }
 
         if (joystickGetDigital(1,8, JOY_LEFT)) {
-          catapultSet(1000);
+          catapultLoad = true;
         }
         if (joystickGetDigital(1,8, JOY_DOWN)){
-          catapultThrow();
+          catapultthrow = true;
+          catapultLoad = false;
+        }
+        if(catapultLoad) {
+            catapultSet(1220);
+        }
+        if (catapultthrow) {
+            catapultthrow = catapultThrow();
+            catapultLoad = true;
         }
 
         if (joystickGetDigital(1,5, JOY_UP)) {

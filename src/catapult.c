@@ -9,25 +9,24 @@ void catapultMove(int speed) { // use positive number
 
 void catapultSet(int distance) {
     int error = analogRead(1) - distance;
-
-    double kp = 0.61;
+    double kp = 0.7;
 
     double proportionalError = 0;
-
-    while (true) {
+    if (abs(error) > 2) {
         error = analogRead(1)- distance;
-        if (error < 50) {
-            return;
-        }
         proportionalError = error * kp;
         catapultMove((int)proportionalError);
         delay(20);
     }
+
 }
 
-void catapultThrow() {
-  while (analogRead(1) < 2300) {
+bool catapultThrow() {
+  int potVal = analogRead(1);
+  if (analogRead(1) < 2300) {
     catapultMove(120);
+  } else {
+    catapultMove(0);
   }
-  catapultMove(0);
+  return potVal < 2300;
 }

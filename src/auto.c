@@ -54,23 +54,49 @@ void autonomous() {
     delay(30);
     chassisSet(0,0);*/
 
-
-
-    chassisSet(-50,-50);
-    delay(800);
-    motorSet(10,-120);
-    delay(700);
+    /*delay(2000);
+    motorSet(10, -120);
+    driveDistance(-40);
+    delay(300);
+    turnLeftDistance(-3);
+    driveDistance(45);
+    motorSet(10, 0);
+    turnLeftDistance(-6.5);
     chassisSet(0,0);
-    delay(1250);
-    chassisSet(30,30);
-    delay(1000);
-    chassisSet(-30,-30);
-    delay(100);
-    chassisSet(40,-40);
-    delay(530);
-    chassisSet(100,100);
-    delay(1000);
+    delay(200);
+    catapultThrow();
+    motorSet(10,120);
+    turnLeftDistance(9);
+    driveDistance(-20);*/
+    /*delay(2000);
+    motorSet(10, -120);
+    driveDistance(-40);
+    delay(300);
+    turnLeftDistance(-3);
+    driveDistance(45);
+    motorSet(10, 0);
+    turnLeftDistance(-4.9);
     chassisSet(0,0);
-
+    delay(500);
+    //catapultThrow();
+    driveDistance(23);
+    delay(200);
+    driveDistance(-72);
+    turnLeftDistance(-9);
+    chassisSet(80,80);
+    delay(500);
+    chassisSet(0,0);
+    chassisSet(120,120);
+    delay(2000);
+    chassisSet(0,0);*/
+    delay(2000);
+    motorSet(10, -120);
+    driveDistance(-41);
+    delay(300);
+    driveDistance(11);
+    turnLeftDistance(9);
+    chassisSet(120,120);
+    delay(900);
+    chassisSet(0,0);
 
 }

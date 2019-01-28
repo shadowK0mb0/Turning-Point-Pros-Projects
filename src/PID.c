@@ -67,8 +67,29 @@ int flywheel(double error, int prevError) {
 
 void driveDistance(int distance) {
   double PI = 3.14159265358979323846;
-  int rotations = (int)(distance*360/(2.75*PI));
-  getTo(rotations,rotations,0.09,0,0.55);
+  int rotations = (int)(distance*360/(4*PI));
+  if (distance < 15) {
+      getTo(rotations,rotations,0.12,0.0015,0.03);
+
+  } else if (distance <= 30) {
+      getTo(rotations,rotations,0.072,0.002,0.017);
+
+  } else {
+      getTo(rotations,rotations,0.077,0.003,0.03);
+  }
+
+}
+void turnLeftDistance(int distance) {
+  double PI = 3.14159265358979323846;
+  int rotations = (int)(distance*360/(4*PI));
+  if (distance <= 3.1) { // 3 is about 30
+      getTo(-1*rotations,rotations,0.5,0.006,0.02);
+  } else if (distance <= 5) {// 4.7 is about 45 degrees
+      getTo(-1*rotations,rotations,0.4,0.008,0.57);
+  } else {
+      getTo(-1*rotations,rotations,0.25,0.003,0.00);
+  }
+
 }
 
 // turning right
@@ -77,78 +98,154 @@ void getTo(int rotationsL, int rotationsR, double kp, double ki, double kd) {
   encoderReset(encoderL);
   encoderReset(encoderR);
   // initialize sensor error variables
-  //int errorL = rotationsL - encoderGet(encoderL);
+  int errorL = rotationsL - encoderGet(encoderL);
   int errorR = rotationsR - encoderGet(encoderR);
-  //int prevErrorL = errorL;
+  int prevErrorL = errorL;
   int prevErrorR = errorR;
-  //int errorTotalL;
-  int errorTotalR;
+  int errorTotalL=0;
+  int errorTotalR=0;
   // declare PID error values
-  //double proportionalErrorL;
+  double proportionalErrorL;
   double proportionalErrorR;
-  //double integralErrorL;
+  double integralErrorL;
   double integralErrorR;
-  //double differentialErrorL;
+  double differentialErrorL;
   double differentialErrorR;
-  int integralActiveZone = 120; // ticks away from target
-  //int currentL;
+  int integralActiveZone = 240; // ticks away from target
+  int currentL;
   int currentR;
 
   while (true) {
     // update sensor error variables
-    //prevErrorL = errorL;
+    prevErrorL = errorL;
     prevErrorR = errorR;
-    //errorL = rotationsL - encoderGet(encoderL);
+    errorL = rotationsL - encoderGet(encoderL);
     errorR = rotationsR - encoderGet(encoderR);
-    if (errorR < 50) {
+    if (abs(errorR) < 10 && abs(errorL) < 10) {
       return;
     }
 
     // only accumulate integral value when close to target
-    /*if (abs(errorL) < integralActiveZone && errorL != 0) {
+    if (abs(errorL) < integralActiveZone && errorL != 0) {
       errorTotalL += errorL;
     } else {
       errorTotalL = 0;
-    }*/
+    }
     if (abs(errorR) < integralActiveZone && errorR != 0) {
       errorTotalR += errorR;
     } else {
       errorTotalR = 0;
     }
 
-    //proportionalErrorL = errorL * kp;
+    proportionalErrorL = errorL * kp;
     proportionalErrorR = errorR * kp;
-    //integralErrorL = errorTotalL * ki;
+    integralErrorL = errorTotalL * ki;
     integralErrorR = errorTotalR * ki;
-    //differentialErrorL = (errorL - prevErrorL) * kd;
+    differentialErrorL = (errorL - prevErrorL) * kd;
     differentialErrorR = (errorR - prevErrorR) * kd;
 
     if (errorR == 0) {
       differentialErrorR = 0;
     }
-    /*if (errorL == 0) {
+    if (errorL == 0) {
       differentialErrorL = 0;
-    }*/
+    }
 
-    //currentL = (int)(proportionalErrorL + integralErrorL + differentialErrorL);
+    currentL = (int)(proportionalErrorL + integralErrorL + differentialErrorL);
     currentR = (int)(proportionalErrorR + integralErrorR + differentialErrorR);
 
-    /*if (currentL < 0) {
-      currentL = 0;
-    }
-    if (currentR < 0) {
-      currentR = 0;
-    }*/
 
-    chassisSet(currentR, currentR);
-    /*
-    printf("--%d %d--\n", currentL, currentR);
-    printf("%d %d\n", rotationsL - errorL, rotationsR - errorR);
-    printf("%d %d\n", errorL, errorR);
-    printf("%d %d\n", errorTotalL, errorTotalR);
-    */
+
+    chassisSet(currentL, currentR);
+
+
+
     delay(20);
-  }
+    }
+}
 
+  // turning left
+  // rotation units: degrees
+  void getToTurnLeft(int rotationsL, int rotationsR, double kp, double ki, double kd) {
+    encoderReset(encoderL);
+    encoderReset(encoderR);
+    // initialize sensor error variables
+    int errorL = rotationsL - encoderGet(encoderL);
+    int errorR = rotationsR - encoderGet(encoderR);
+    int prevErrorL = errorL;
+    int prevErrorR = errorR;
+    int errorTotalL;
+    int errorTotalR;
+    // declare PID error values
+    double proportionalErrorL;
+    double proportionalErrorR;
+    double integralErrorL;
+    double integralErrorR;
+    double differentialErrorL;
+    double differentialErrorR;
+    int integralActiveZone = 120; // ticks away from target
+    int currentL;
+    int currentR;
+
+    while (true) {
+      // update sensor error variables
+      prevErrorL = errorL;
+      prevErrorR = errorR;
+      errorL = rotationsL - encoderGet(encoderL);
+      errorR = rotationsR - encoderGet(encoderR);
+      if (abs(errorR) < 2 & abs(errorL) < 2) {
+        return;
+      }
+
+      // only accumulate integral value when close to target
+      if (abs(errorL) < integralActiveZone && errorL != 0) {
+        errorTotalL += errorL;
+      } else {
+        errorTotalL = 0;
+      }
+      if (abs(errorR) < integralActiveZone && errorR != 0) {
+        errorTotalR += errorR;
+      } else {
+        errorTotalR = 0;
+      }
+
+      proportionalErrorL = errorL * kp;
+      proportionalErrorR = errorR * kp;
+      integralErrorL = errorTotalL * ki;
+      integralErrorR = errorTotalR * ki;
+      differentialErrorL = (errorL - prevErrorL) * kd;
+      differentialErrorR = (errorR - prevErrorR) * kd;
+
+      if (errorR == 0) {
+        differentialErrorR = 0;
+      }
+      if (errorL == 0) {
+        differentialErrorL = 0;
+      }
+
+      currentL = (int)(proportionalErrorL + integralErrorL + differentialErrorL);
+      currentR = (int)(proportionalErrorR + integralErrorR + differentialErrorR);
+
+      /*if (currentL < 0) {
+        currentL = 0;
+      }
+      if (currentR < 0) {
+        currentR = 0;
+      }*/
+
+      chassisSet(currentL, currentR);
+
+      /*printf("--%d %d--\n", currentL, currentR);
+      printf("%d %d\n", rotationsL - errorL, rotationsR - errorR);
+      printf("%d %d\n", errorL, errorR);
+      printf("%d %d\n", errorTotalL, errorTotalR);*/
+
+      printf("--%d--\n", currentR);
+      printf("%d\n", rotationsR - errorR);
+      printf("%d\n", errorR);
+      printf("%d\n", errorTotalR);
+
+      delay(20);
+    }
 
 }
