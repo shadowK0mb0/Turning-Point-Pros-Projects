@@ -270,7 +270,7 @@ void operatorControl() {
           catapultLoad = false;
         }
         if(catapultLoad) {
-            catapultSet(1220);
+            catapultLoad = catapultSet(1220);
         }
         if (catapultthrow) {
             catapultthrow = catapultThrow();

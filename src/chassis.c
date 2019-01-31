@@ -11,7 +11,7 @@ void chassisSet(int left, int right) {
     right = 120;
   } else if (right < -120) {
     right = -120;
-}
+  }
   motorSet(1, -left);
   motorSet(2, left);
   motorSet(3, right);

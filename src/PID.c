@@ -249,3 +249,47 @@ void getTo(int rotationsL, int rotationsR, double kp, double ki, double kd) {
     }
 
 }
+
+const int accel_step = 9;
+const int deccel_step = 256; // no decel slew
+static int leftSpeed = 0;
+static int rightSpeed = 0;
+
+void chassisSlew(int leftTarget, int rightTarget){
+  // right slew
+  int rightStep;
+  if(abs(rightSpeed) < abs(rightTarget)) {
+    rightStep = accel_step;
+  } else {
+    rightStep = deccel_step;
+  }
+
+  if(rightTarget > rightSpeed + rightStep) {
+    rightSpeed += rightStep;
+  } else if(rightTarget < rightSpeed - rightStep) {
+    rightSpeed -= rightStep;
+  } else {
+    rightSpeed = rightTarget;
+  }
+
+  int leftStep;
+
+  if(abs(leftSpeed) < abs(leftTarget)) {
+    leftStep = accel_step;
+  } else {
+    leftStep = deccel_step;
+  }
+
+  if(leftTarget > leftSpeed + leftStep) {
+    leftSpeed += leftStep;
+  } else if(leftTarget < leftSpeed - leftStep) {
+    leftSpeed -= leftStep;
+  } else {
+    leftSpeed = leftTarget;
+  }
+
+  chassisSet(leftSpeed, rightSpeed);
+
+
+
+}
